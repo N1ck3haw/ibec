@@ -189,7 +189,7 @@ const SCHOOL_NAMES: Record<string, string> = {
   '长春理工大学':'Changchun University of Science and Technology',
   '中国药科大学':'China Pharmaceutical University','长春中医药大学':'Changchun University of Chinese Medicine',
   '信阳师范大学':'Xinyang Normal University',
-  'Zhujiang Hospital, Southern Medical University':'南方医科大学珠江医院',
+  '南方医科大学珠江医院':'Zhujiang Hospital, Southern Medical University',
   '东京科学大学':'Tokyo University of Science',
   '庆熙大学':'Kyunghee University','延世大学':'Yonsei University',
   '加州大学圣地亚哥分校':'University of California, San Diego',
