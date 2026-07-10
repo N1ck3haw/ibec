@@ -258,15 +258,11 @@
       ]
     },
     "浙江": {
-      "count": 13,
+      "count": 12,
       "schools": [
         {
           "name": "浙江大学",
           "count": 10
-        },
-        {
-          "name": "University of California, San Diego",
-          "count": 1
         },
         {
           "name": "西湖大学",
@@ -355,7 +351,7 @@
       ]
     },
     "福建": {
-      "count": 4,
+      "count": 3,
       "schools": [
         {
           "name": "福建医科大学",
@@ -363,10 +359,6 @@
         },
         {
           "name": "厦门大学",
-          "count": 1
-        },
-        {
-          "name": "Purdue University",
           "count": 1
         }
       ]
@@ -441,15 +433,6 @@
         },
         {
           "name": "山东大学",
-          "count": 1
-        }
-      ]
-    },
-    "河南": {
-      "count": 1,
-      "schools": [
-        {
-          "name": "信阳师范大学",
           "count": 1
         }
       ]
