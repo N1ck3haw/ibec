@@ -189,6 +189,7 @@ const SCHOOL_NAMES: Record<string, string> = {
   '长春理工大学':'Changchun University of Science and Technology',
   '中国药科大学':'China Pharmaceutical University','长春中医药大学':'Changchun University of Chinese Medicine',
   '信阳师范大学':'Xinyang Normal University',
+  'Zhujiang Hospital, Southern Medical University':'南方医科大学珠江医院',
   '东京科学大学':'Tokyo University of Science',
   '庆熙大学':'Kyunghee University','延世大学':'Yonsei University',
   '加州大学圣地亚哥分校':'University of California, San Diego',
@@ -280,19 +281,23 @@ function renderWorld() {
       }
     })
     // Link China and South China Sea Islands highlight on hover
-    const nhName = isEn ? 'South China Sea Islands' : '南海诸岛'
-    const chinaName = isEn ? 'China' : '中国'
     wc.value.on('mouseover', (params: any) => {
-      if (params.name === chinaName) {
-        wc.value?.dispatchAction({ type: 'highlight', seriesIndex: 0, name: nhName })
-      } else if (params.name === nhName) {
-        wc.value?.dispatchAction({ type: 'highlight', seriesIndex: 0, name: chinaName })
+      const curEn = isEnglish.value
+      const nh = curEn ? 'South China Sea Islands' : '南海诸岛'
+      const ch = curEn ? 'China' : '中国'
+      if (params.name === ch && wc.value) {
+        wc.value.dispatchAction({ type: 'highlight', seriesIndex: 0, name: nh })
+      } else if (params.name === nh && wc.value) {
+        wc.value.dispatchAction({ type: 'highlight', seriesIndex: 0, name: ch })
       }
     })
     wc.value.on('mouseout', (params: any) => {
-      if (params.name === chinaName || params.name === nhName) {
-        wc.value?.dispatchAction({ type: 'downplay', seriesIndex: 0, name: chinaName })
-        wc.value?.dispatchAction({ type: 'downplay', seriesIndex: 0, name: nhName })
+      const curEn = isEnglish.value
+      const nh = curEn ? 'South China Sea Islands' : '南海诸岛'
+      if (params.name === 'China' || params.name === '中国' && wc.value) {
+        wc.value.dispatchAction({ type: 'downplay', seriesIndex: 0, name: nh })
+      } else if (params.name === nh && wc.value) {
+        wc.value.dispatchAction({ type: 'downplay', seriesIndex: 0, name: curEn ? 'China' : '中国' })
       }
     })
   }
