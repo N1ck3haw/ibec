@@ -614,7 +614,7 @@ watch(isEnglish, () => {
         </div>
 
         <!-- World Detail Panel -->
-        <div v-if="selectedWorldRegion && worldDetailSchools.length > 0"
+        <div v-if="selectedWorldRegion"
              class="bg-white rounded-xl shadow-sm border border-brand-blue/20 overflow-hidden mb-6">
           <div class="flex items-center justify-between px-6 py-3 bg-brand-blue/5">
             <span class="text-sm font-semibold text-brand-blue">
@@ -624,6 +624,9 @@ watch(isEnglish, () => {
                     class="text-gray-400 hover:text-gray-600 text-lg leading-none">&times;</button>
           </div>
           <div class="px-6 py-4 max-h-[300px] overflow-y-auto">
+            <div v-if="worldDetailSchools.length === 0" class="text-sm text-gray-400 text-center py-4">
+              {{ isEnglish ? 'No teams registered in this country.' : '当前无队伍报名。' }}
+            </div>
             <div v-for="s in worldDetailSchools" :key="s.name"
                  class="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
               <span class="text-sm text-gray-800">{{ getSchoolDisplay(s.name, isEnglish) }}</span>
@@ -643,7 +646,7 @@ watch(isEnglish, () => {
         </div>
 
         <!-- China Detail Panel -->
-        <div v-if="selectedChinaRegion && chinaDetailSchools.length > 0"
+        <div v-if="selectedChinaRegion"
              class="bg-white rounded-xl shadow-sm border border-brand-blue/20 overflow-hidden mb-6">
           <div class="flex items-center justify-between px-6 py-3 bg-brand-blue/5">
             <span class="text-sm font-semibold text-brand-blue">
@@ -653,6 +656,9 @@ watch(isEnglish, () => {
                     class="text-gray-400 hover:text-gray-600 text-lg leading-none">&times;</button>
           </div>
           <div class="px-6 py-4 max-h-[300px] overflow-y-auto">
+            <div v-if="chinaDetailSchools.length === 0" class="text-sm text-gray-400 text-center py-4">
+              {{ isEnglish ? 'No teams registered in this province.' : '当前无队伍报名。' }}
+            </div>
             <div v-for="s in chinaDetailSchools" :key="s.name"
                  class="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
               <span class="text-sm text-gray-800">{{ getSchoolDisplay(s.name, isEnglish) }}</span>
