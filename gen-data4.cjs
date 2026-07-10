@@ -1,4 +1,4 @@
-﻿const { parse } = require('csv-parse/sync');
+const { parse } = require('csv-parse/sync');
 const fs = require('fs');
 const buf = fs.readFileSync('C:\\Users\\Dusan Usjak\\Desktop\\ibecv4\\ibecv4\\frontend\\ibec_teams_original.csv');
 const text = buf.toString('utf-8');
@@ -8,13 +8,13 @@ console.log('Total records:', records.length);
 
 // ===== Normalization =====
 const NORM = {
-  '浙江大学生命科学学院':'浙江大学',
-  '西湖大学/北京中关村学院':'西湖大学',
-  '西北农林科技大学动物医学院':'西北农林科技大学',
-  '西藏大学生态环境学院':'西藏大学',
-  '吉林省长春中医药大学':'长春中医药大学',
-  '齐鲁工业大学（山东省科学院）':'齐鲁工业大学',
-  'PUMC':'北京协和医学院',
+  '??????????':'????',
+  '????/???????':'????',
+  '?????????????':'????????',
+  '??????????':'????',
+  '??????????':'???????',
+  '??????(??????)':'??????',
+  'PUMC':'???????',
   'university of california, davis':'University of California, Davis',
 };
 function normalize(s) { return NORM[s] || s; }
@@ -39,9 +39,7 @@ function guessCountry(addr, school, nat) {
 }
 
 // ===== Province detection from address =====
-const PROV_KW = ['北京','天津','上海','重庆','河北','山西','辽宁','吉林','黑龙江',
-  '江苏','浙江','安徽','福建','江西','山东','河南','湖北','湖南','广东','海南',
-  '四川','贵州','云南','陕西','甘肃','青海','台湾','内蒙古','广西','西藏','宁夏','新疆'];
+const PROV_KW = ['北京','天津','上海','重庆','河北','山西','辽宁','吉林','黑龙江','江苏','浙江','安徽','福建','江西','山东','河南','湖北','湖南','广东','海南','四川','贵州','云南','陕西','甘肃','青海','台湾','内蒙古','广西','西藏','宁夏','新疆'];
 function getProvince(addr) {
   if (!addr) return null;
   for (const pk of PROV_KW) { if (addr.includes(pk)) return pk; }
@@ -87,14 +85,12 @@ records.forEach((r, idx) => {
   
   // ---- Province data ----
   // Determine province from leader_address
-  const prov = getProvince(addr);
-  // Also try from school name
   const provFromSchool = provinceFromSchool(leaderSchool);
-  const province = prov || provFromSchool;
-  
+  const provAddr = getProvince(addr);
+  const province = provFromSchool ? provFromSchool : provAddr;
   if (province && country === 'China') {
+
     if (!provTeams[province]) provTeams[province] = new Set();
-    provTeams[province].add(idx);
     // Leader school -> province
     if (leaderSchool) {
       if (!provSchools[province]) provSchools[province] = {};
@@ -136,7 +132,7 @@ Object.entries(provTeams).forEach(([prov, set]) => {
     .map(([name, count]) => ({ name, count }));
   chinaOutput[prov] = { count: set.size, schools };
 });
-chinaOutput['南海诸岛'] = { count: 0, schools: [] };
+chinaOutput['????'] = { count: 0, schools: [] };
 
 const totalTeams = new Set();
 records.forEach((_, idx) => totalTeams.add(idx));
@@ -149,8 +145,8 @@ const output = {
 
 // ===== Check: Zhejiang detail =====
 console.log('\n=== Verification ===');
-console.log('Zhejiang teams:', provTeams['浙江']?.size || 0);
-console.log('Zhejiang schools:', JSON.stringify(provSchools['浙江']));
+console.log('Zhejiang teams:', provTeams['??']?.size || 0);
+console.log('Zhejiang schools:', JSON.stringify(provSchools['??']));
 console.log('China world teams:', worldTeams['China']?.size || 0);
 console.log('China in world has schools:', worldOutput['China']?.schools?.length || 0);
 console.log('Sum of province teams:', Object.values(provTeams).reduce((a,s) => a+s.size, 0));
