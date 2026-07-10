@@ -397,6 +397,17 @@ async function initMaps() {
       fetchJson(CDN_URLS.china, isEnglish.value ? 'China map' : '中国地图'),
     ])
     
+    // Merge 南海诸岛 geometry into China feature on world map
+    const nhFeature = cj.features?.find((f: any) => f.properties?.name === '南海诸岛')
+    const chinaFeature = wj.features?.find((f: any) => f.properties?.name === 'China')
+    if (nhFeature && chinaFeature && chinaFeature.geometry?.type === 'MultiPolygon') {
+      if (nhFeature.geometry?.type === 'MultiPolygon') {
+        chinaFeature.geometry.coordinates.push(...nhFeature.geometry.coordinates)
+      } else if (nhFeature.geometry?.type === 'Polygon') {
+        chinaFeature.geometry.coordinates.push(nhFeature.geometry.coordinates)
+      }
+    }
+    
     echarts.registerMap('world-en', wj)
     const worldCn = JSON.parse(JSON.stringify(wj))
     worldCn.features.forEach((f: any) => {
