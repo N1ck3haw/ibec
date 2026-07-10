@@ -34,6 +34,7 @@ function guessCountry(addr, school, nat) {
   if (a.includes('korea')||a.includes('kaist')||a.includes('yonsei')||a.includes('kyunghee')) return 'South Korea';
   if (a.includes('sri lanka')) return 'Sri Lanka';
   if (a.includes('california')||a.includes('davis')||a.includes('san diego')||a.includes('purdue')||s.includes('purdue')||s.includes('california')||s.includes('san diego')) return 'United States';
+  if (/[\u4e00-\u9fff]/.test(s)||s.includes('xian')||s.includes("xi'an")||s.includes('beijing')||s.includes('shanghai')||s.includes('zhejiang')) return 'China';
   return nat || 'Unknown';
 }
 
