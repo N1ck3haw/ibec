@@ -600,7 +600,7 @@ watch(isEnglish, () => {
             </span>
             <span class="w-px h-5 bg-gray-300"></span>
             <span class="inline-flex items-center gap-1">
-              <strong class="text-brand-blue text-lg">{{ teamData ? Object.keys(teamData.world).length : 3 }}</strong>
+              <strong class="text-brand-blue text-lg">{{ teamData ? Object.keys(teamData.world).filter(k => k !== 'Unknown').length : 3 }}</strong>
               {{ isEnglish ? 'countries' : '国家' }}
             </span>
             <span class="w-px h-5 bg-gray-300"></span>
