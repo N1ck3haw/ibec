@@ -280,26 +280,6 @@ function renderWorld() {
         worldDetailSchools.value = getSchoolList(key === '中国' ? 'China' : key, true)
       }
     })
-    // Link China and South China Sea Islands highlight on hover
-    wc.value.on('mouseover', (params: any) => {
-      const curEn = isEnglish.value
-      const nh = curEn ? 'South China Sea Islands' : '南海诸岛'
-      const ch = curEn ? 'China' : '中国'
-      if (params.name === ch && wc.value) {
-        wc.value.dispatchAction({ type: 'highlight', seriesIndex: 0, name: nh })
-      } else if (params.name === nh && wc.value) {
-        wc.value.dispatchAction({ type: 'highlight', seriesIndex: 0, name: ch })
-      }
-    })
-    wc.value.on('mouseout', (params: any) => {
-      const curEn = isEnglish.value
-      const nh = curEn ? 'South China Sea Islands' : '南海诸岛'
-      if (params.name === 'China' || params.name === '中国' && wc.value) {
-        wc.value.dispatchAction({ type: 'downplay', seriesIndex: 0, name: nh })
-      } else if (params.name === nh && wc.value) {
-        wc.value.dispatchAction({ type: 'downplay', seriesIndex: 0, name: curEn ? 'China' : '中国' })
-      }
-    })
   }
   const worldData = Object.entries(teamData?.world || {China:{count:76,schools:[]}}).map(([name, info]: any) => ({
     name: isEn ? name : (COUNTRY_CN_MAP[name] || name),
@@ -416,15 +396,6 @@ async function initMaps() {
       fetchJson(CDN_URLS.world, isEnglish.value ? 'world map' : '世界地图'),
       fetchJson(CDN_URLS.china, isEnglish.value ? 'China map' : '中国地图'),
     ])
-    
-    // Copy 南海诸岛 feature from china map to world maps
-    const nanhaiFeature = cj.features?.find((f: any) => f.properties?.name === '南海诸岛')
-    if (nanhaiFeature) {
-      // Add English-named version for world-en
-      const enNanhai = JSON.parse(JSON.stringify(nanhaiFeature))
-      enNanhai.properties.name = 'South China Sea Islands'
-      wj.features.push(enNanhai)
-    }
     
     echarts.registerMap('world-en', wj)
     const worldCn = JSON.parse(JSON.stringify(wj))
