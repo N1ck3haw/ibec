@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { useLanguage } from '../../composables/useLanguage'
 import * as echarts from 'echarts'
 
@@ -66,35 +66,87 @@ const tracks = [
 ]
 
 // ===== Maps Data & Functions =====
-const DIST_DATA = {
-  total: 81,
-  chinaTotal: 76,
-  provinces: {
-    '浙江': 14, '广东': 13, '湖北': 7, '陕西': 6, '北京': 5,
-    '福建': 4, '山西': 4, '山东': 3, '上海': 3, '海南': 3,
-    '湖南': 2, '四川': 2, '江苏': 2, '吉林': 2,
-    '河北': 1, '河南': 1, '黑龙江': 1, '西藏': 1, '安徽': 1, '江西': 1,
-  },
-  countries: { 'Thailand': 3, 'United States': 1, 'Japan': 1 },
-}
-
-const provinceCount = Object.keys(DIST_DATA.provinces).length
-const countryCount = Object.keys(DIST_DATA.countries).length
-
-const PROV_MAP: Record<string, string> = {
-  '广东':'广东','浙江':'浙江','湖北':'湖北','北京':'北京',
-  '陕西':'陕西','福建':'福建','山东':'山东','山西':'山西',
-  '上海':'上海','海南':'海南','湖南':'湖南','四川':'四川',
-  '江苏':'江苏','吉林':'吉林','河北':'河北','河南':'河南',
-  '黑龙江':'黑龙江','西藏':'西藏','安徽':'安徽','江西':'江西',
-}
 
 const PROV_NAME_EN: Record<string, string> = {
-  '广东':'Guangdong','浙江':'Zhejiang','湖北':'Hubei','北京':'Beijing',
-  '陕西':'Shaanxi','福建':'Fujian','山东':'Shandong','山西':'Shanxi',
-  '上海':'Shanghai','海南':'Hainan','湖南':'Hunan','四川':'Sichuan',
-  '江苏':'Jiangsu','吉林':'Jilin','河北':'Hebei','河南':'Henan',
-  '黑龙江':'Heilongjiang','西藏':'Tibet','安徽':'Anhui','江西':'Jiangxi',
+  '北京':'Beijing','天津':'Tianjin','上海':'Shanghai','重庆':'Chongqing',
+  '河北':'Hebei','山西':'Shanxi','辽宁':'Liaoning','吉林':'Jilin',
+  '黑龙江':'Heilongjiang','江苏':'Jiangsu','浙江':'Zhejiang','安徽':'Anhui',
+  '福建':'Fujian','江西':'Jiangxi','山东':'Shandong','河南':'Henan',
+  '湖北':'Hubei','湖南':'Hunan','广东':'Guangdong','海南':'Hainan',
+  '四川':'Sichuan','贵州':'Guizhou','云南':'Yunnan','陕西':'Shaanxi',
+  '甘肃':'Gansu','青海':'Qinghai','台湾':'Taiwan',
+  '内蒙古':'Inner Mongolia','广西':'Guangxi','西藏':'Tibet','宁夏':'Ningxia',
+  '新疆':'Xinjiang','香港':'Hong Kong','澳门':'Macau','南海诸岛':'South China Sea Islands','十段线':'Ten-dash Line',
+}
+
+const COUNTRY_CN_MAP: Record<string, string> = {
+  'Afghanistan':'阿富汗','Aland':'奥兰群岛','Albania':'阿尔巴尼亚','Algeria':'阿尔及利亚',
+  'American Samoa':'美属萨摩亚','Andorra':'安道尔','Angola':'安哥拉',
+  'Antigua and Barb.':'安提瓜和巴布达','Argentina':'阿根廷','Armenia':'亚美尼亚',
+  'Australia':'澳大利亚','Austria':'奥地利','Azerbaijan':'阿塞拜疆',
+  'Bahamas':'巴哈马','Bahrain':'巴林','Bangladesh':'孟加拉国','Barbados':'巴巴多斯',
+  'Belarus':'白俄罗斯','Belgium':'比利时','Belize':'伯利兹','Benin':'贝宁',
+  'Bermuda':'百慕大','Bhutan':'不丹','Bolivia':'玻利维亚',
+  'Bosnia and Herz.':'波斯尼亚和黑塞哥维那','Botswana':'博茨瓦纳',
+  'Br. Indian Ocean Ter.':'英属印度洋领地','Brazil':'巴西','Brunei':'文莱',
+  'Bulgaria':'保加利亚','Burkina Faso':'布基纳法索','Burundi':'布隆迪',
+  'Cambodia':'柬埔寨','Cameroon':'喀麦隆','Canada':'加拿大','Cape Verde':'佛得角',
+  'Cayman Is.':'开曼群岛','Central African Rep.':'中非','Chad':'乍得',
+  'Chile':'智利','China':'中国','Colombia':'哥伦比亚','Comoros':'科摩罗',
+  'Congo':'刚果','Costa Rica':'哥斯达黎加','Croatia':'克罗地亚','Cuba':'古巴',
+  'Curaçao':'库拉索','Cyprus':'塞浦路斯','Czech Rep.':'捷克',
+  "Côte d'Ivoire":'科特迪瓦','Dem. Rep. Congo':'刚果民主共和国',
+  'Dem. Rep. Korea':'朝鲜','Denmark':'丹麦','Djibouti':'吉布提','Dominica':'多米尼克',
+  'Dominican Rep.':'多米尼加','Ecuador':'厄瓜多尔','Egypt':'埃及',
+  'El Salvador':'萨尔瓦多','Eq. Guinea':'赤道几内亚','Eritrea':'厄立特里亚',
+  'Estonia':'爱沙尼亚','Ethiopia':'埃塞俄比亚','Faeroe Is.':'法罗群岛',
+  'Falkland Is.':'福克兰群岛','Fiji':'斐济','Finland':'芬兰',
+  'Fr. Polynesia':'法属波利尼西亚','Fr. S. Antarctic Lands':'法属南部领地',
+  'France':'法国','Gabon':'加蓬','Gambia':'冈比亚','Georgia':'格鲁吉亚',
+  'Germany':'德国','Ghana':'加纳','Greece':'希腊','Greenland':'格陵兰',
+  'Grenada':'格林纳达','Guam':'关岛','Guatemala':'危地马拉','Guinea':'几内亚',
+  'Guinea-Bissau':'几内亚比绍','Guyana':'圭亚那','Haiti':'海地',
+  'Heard I. and McDonald Is.':'赫德岛和麦克唐纳群岛','Honduras':'洪都拉斯',
+  'Hungary':'匈牙利','Iceland':'冰岛','India':'印度','Indonesia':'印度尼西亚',
+  'Iran':'伊朗','Iraq':'伊拉克','Ireland':'爱尔兰','Isle of Man':'马恩岛',
+  'Israel':'以色列','Italy':'意大利','Jamaica':'牙买加','Japan':'日本',
+  'Jersey':'泽西岛','Jordan':'约旦','Kazakhstan':'哈萨克斯坦','Kenya':'肯尼亚',
+  'Kiribati':'基里巴斯','Korea':'韩国','Kuwait':'科威特','Kyrgyzstan':'吉尔吉斯斯坦',
+  'Lao PDR':'老挝','Latvia':'拉脱维亚','Lebanon':'黎巴嫩','Lesotho':'莱索托',
+  'Liberia':'利比里亚','Libya':'利比亚','Liechtenstein':'列支敦士登',
+  'Lithuania':'立陶宛','Luxembourg':'卢森堡','Macedonia':'北马其顿',
+  'Madagascar':'马达加斯加','Malawi':'马拉维','Malaysia':'马来西亚',
+  'Mali':'马里','Malta':'马耳他','Mauritania':'毛里塔尼亚','Mauritius':'毛里求斯',
+  'Mexico':'墨西哥','Micronesia':'密克罗尼西亚','Moldova':'摩尔多瓦',
+  'Mongolia':'蒙古','Montenegro':'黑山','Montserrat':'蒙特塞拉特',
+  'Morocco':'摩洛哥','Mozambique':'莫桑比克','Myanmar':'缅甸',
+  'N. Cyprus':'北塞浦路斯','N. Mariana Is.':'北马里亚纳群岛','Namibia':'纳米比亚',
+  'Nepal':'尼泊尔','Netherlands':'荷兰','New Caledonia':'新喀里多尼亚',
+  'New Zealand':'新西兰','Nicaragua':'尼加拉瓜','Niger':'尼日尔','Nigeria':'尼日利亚',
+  'Niue':'纽埃','Norway':'挪威','Oman':'阿曼','Pakistan':'巴基斯坦',
+  'Palau':'帕劳','Palestine':'巴勒斯坦','Panama':'巴拿马',
+  'Papua New Guinea':'巴布亚新几内亚','Paraguay':'巴拉圭','Peru':'秘鲁',
+  'Philippines':'菲律宾','Poland':'波兰','Portugal':'葡萄牙','Puerto Rico':'波多黎各',
+  'Qatar':'卡塔尔','Romania':'罗马尼亚','Russia':'俄罗斯','Rwanda':'卢旺达',
+  'S. Geo. and S. Sandw. Is.':'南乔治亚和南桑威奇群岛','S. Sudan':'南苏丹',
+  'Saint Helena':'圣赫勒拿','Saint Lucia':'圣卢西亚','Samoa':'萨摩亚',
+  'Saudi Arabia':'沙特阿拉伯','Senegal':'塞内加尔','Serbia':'塞尔维亚',
+  'Seychelles':'塞舌尔','Siachen Glacier':'锡亚琴冰川',
+  'Sierra Leone':'塞拉利昂','Singapore':'新加坡','Slovakia':'斯洛伐克',
+  'Slovenia':'斯洛文尼亚','Solomon Is.':'所罗门群岛','Somalia':'索马里',
+  'South Africa':'南非','Spain':'西班牙','Sri Lanka':'斯里兰卡',
+  'St. Pierre and Miquelon':'圣皮埃尔和密克隆','St. Vin. and Gren.':'圣文森特和格林纳丁斯',
+  'Sudan':'苏丹','Suriname':'苏里南','Swaziland':'斯威士兰','Sweden':'瑞典',
+  'Switzerland':'瑞士','Syria':'叙利亚','São Tomé and Principe':'圣多美和普林西比',
+  'Tajikistan':'塔吉克斯坦','Tanzania':'坦桑尼亚','Thailand':'泰国',
+  'Timor-Leste':'东帝汶','Togo':'多哥','Tonga':'汤加',
+  'Trinidad and Tobago':'特立尼达和多巴哥','Tunisia':'突尼斯','Turkey':'土耳其',
+  'Turkmenistan':'土库曼斯坦','Turks and Caicos Is.':'特克斯和凯科斯群岛',
+  'U.S. Virgin Is.':'美属维尔京群岛','Uganda':'乌干达','Ukraine':'乌克兰',
+  'United Arab Emirates':'阿联酋','United Kingdom':'英国','United States':'美国',
+  'Uruguay':'乌拉圭','Uzbekistan':'乌兹别克斯坦','Vanuatu':'瓦努阿图',
+  'Venezuela':'委内瑞拉','Vietnam':'越南','W. Sahara':'西撒哈拉',
+  'Yemen':'也门','Zambia':'赞比亚','Zimbabwe':'津巴布韦',
 }
 
 const CDN_URLS = {
@@ -103,18 +155,100 @@ const CDN_URLS = {
     'https://unpkg.com/echarts/map/json/world.json',
   ],
   china: [
+    'https://geojson.cn/api/data/china.json',
     'https://cdn.jsdelivr.net/npm/echarts/map/json/china.json',
     'https://unpkg.com/echarts/map/json/china.json',
-    'https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json',
   ],
 }
 
+// School name bilingual mapping
+const SCHOOL_NAMES: Record<string, string> = {
+  '海南大学':'Hainan University','浙江大学':'Zhejiang University',
+  '华中农业大学':'Huazhong Agricultural University','中南大学':'Central South University',
+  '齐鲁工业大学':'Qilu University of Technology','北京协和医学院':'Peking Union Medical College',
+  '西藏大学':'Tibet University','兰州大学':'Lanzhou University',
+  '深圳理工大学':'Shenzhen Technology University','四川大学':'Sichuan University',
+  '昌平实验室':'Changping Laboratory','南方医科大学':'Southern Medical University',
+  '广东食品药品职业学院':'Guangdong Food and Drug Vocational College',
+  '晋中信息学院':'Jinzhong College of Information','湖北大学':'Hubei University',
+  '福建医科大学':'Fujian Medical University','空军军医大学':'Air Force Medical University',
+  '华东师范大学':'East China Normal University','华南农业大学':'South China Agricultural University',
+  '厦门大学':'Xiamen University','上海科技大学':'ShanghaiTech University',
+  '湘潭大学':'Xiangtan University','西湖大学':'Westlake University',
+  '哈尔滨工业大学':'Harbin Institute of Technology','西北工业大学':'Northwestern Polytechnical University',
+  '山东大学':'Shandong University','南昌大学':'Nanchang University',
+  '南京农业大学':'Nanjing Agricultural University','浙江海洋大学':'Zhejiang Ocean University',
+  '陕西科技大学':'Shaanxi University of Science and Technology',
+  '中国中医科学院':'China Academy of Chinese Medical Sciences',
+  '中山大学':'Sun Yat-sen University',
+  '西北农林科技大学':'Northwest A&F University',
+  '山西农业大学':'Shanxi Agricultural University','安徽医科大学':'Anhui Medical University','安徽医科大学第一附属医院':'The First Affiliated Hospital of Anhui Medical University',
+  '华中科技大学':'Huazhong University of Science and Technology','中山大学孙逸仙纪念医院':'Sun Yat-sen Memorial Hospital of Sun Yat-sen University',
+  '中南财经政法大学':'Zhongnan University of Economics and Law',
+  '深圳北理莫斯科大学':'Shenzhen MSU-BIT University',
+  '长春理工大学':'Changchun University of Science and Technology',
+  '中国药科大学':'China Pharmaceutical University','长春中医药大学':'Changchun University of Chinese Medicine',
+  '信阳师范大学':'Xinyang Normal University',
+  '东京科学大学':'Tokyo University of Science',
+  '庆熙大学':'Kyunghee University','延世大学':'Yonsei University',
+  '加州大学圣地亚哥分校':'University of California, San Diego',
+  '朱拉隆功大学药学院':'Faculty of Pharmaceutical Sciences, Chulalongkorn University',
+  '普渡大学':'Purdue University','加州大学戴维斯分校':'University of California, Davis',
+  '西安交通大学':'Xi\'an Jiaotong University',
+}
+
+function getSchoolDisplay(name: string, isEn: boolean): string {
+  if (isEn) {
+    // Check if name has English version
+    for (const [cn, en] of Object.entries(SCHOOL_NAMES)) {
+      if (cn === name || en === name) return en
+    }
+    return name.match(/[\u4e00-\u9fff]/) ? name : name  // keep if already English
+  } else {
+    for (const [cn, en] of Object.entries(SCHOOL_NAMES)) {
+      if (cn === name || en === name) return cn
+    }
+    return name
+  }
+}
+
+const selectedWorldRegion = ref<string | null>(null)
+const selectedChinaRegion = ref<string | null>(null)
+const worldDetailSchools = ref<{name:string;count:number}[]>([])
+const chinaDetailSchools = ref<{name:string;count:number}[]>([])
+
+let teamData: any = null
 const loading = ref(true)
 const loadStatus = ref('加载中…')
 const error = ref('')
 const wc = ref<echarts.ECharts | null>(null)
 const cc = ref<echarts.ECharts | null>(null)
 let resizeHandler: (() => void) | null = null
+
+// Fallback counts for provinces
+const PROV_COUNTS: Record<string, number> = {
+  '浙江':13,'广东':12,'湖北':7,'陕西':5,'北京':5,
+  '福建':4,'山西':4,'山东':3,'上海':3,'海南':3,
+  '湖南':2,'四川':2,'江苏':2,'吉林':2,
+  '河北':1,'河南':1,'黑龙江':1,'西藏':1,'安徽':1,'江西':1,
+  '南海诸岛':0,
+}
+
+function getSchoolList(region: string, isWorld: boolean): {name:string;count:number}[] {
+  if (!teamData) return []
+  const map = isWorld ? teamData.world : teamData.china
+  return map[region]?.schools || []
+}
+
+function getRegionCount(region: string, isWorld: boolean): number {
+  if (!teamData) return 0
+  const map = isWorld ? teamData.world : teamData.china
+  return map[region]?.count || 0
+}
+
+function tooltipHtml(name: string, count: number, isEn: boolean) {
+  return `<div style="font-size:14px;font-weight:600;color:#1a202c">${name}</div><div style="font-size:12px;color:#4a5568">${count} ${isEn ? 'teams' : '组'}</div>`
+}
 
 async function fetchJson(urls: string[], label: string) {
   for (const url of urls) {
@@ -129,23 +263,38 @@ async function fetchJson(urls: string[], label: string) {
 }
 
 function renderWorld() {
-  const d = DIST_DATA
+  const isEn = isEnglish.value
   const el = document.getElementById('worldMap')
   if (!el) return
-  const chart = echarts.init(el)
-  wc.value = chart
-  chart.setOption({
+  if (!wc.value) {
+    wc.value = echarts.init(el)
+    wc.value.on('click', (params: any) => {
+      const regionName = params.name
+      if (selectedWorldRegion.value === regionName) {
+        selectedWorldRegion.value = null
+        worldDetailSchools.value = []
+      } else {
+        selectedWorldRegion.value = regionName
+        const key = !isEn ? Object.entries(COUNTRY_CN_MAP).find(([,cn]) => cn === regionName)?.[0] || regionName : regionName
+        worldDetailSchools.value = getSchoolList(key === '中国' ? 'China' : key, true)
+      }
+    })
+  }
+  const worldData = Object.entries(teamData?.world || {China:{count:76,schools:[]}}).map(([name, info]: any) => ({
+    name: isEn ? name : (COUNTRY_CN_MAP[name] || name),
+    value: info.count,
+  }))
+  wc.value.setOption({
     tooltip: {
       trigger: 'item',
       formatter: (p: any) => {
-        const v = p.value || 0
-        return `<div style="font-size:14px;font-weight:600;color:#1a202c;margin-bottom:2px">${p.name}</div>
-                <div style="font-size:13px;color:#4a5568">${v} ${isEnglish.value ? 'teams' : '组'}</div>`
+        const displayName = isEn ? p.name : (COUNTRY_CN_MAP[p.name] || p.name)
+        return tooltipHtml(displayName, p.value || 0, isEn)
       },
       backgroundColor: 'rgba(255,255,255,0.96)',
       borderColor: 'rgba(0,0,0,0.06)', borderWidth: 1,
-      padding: [10, 14],
-      extraCssText: 'border-radius:10px;box-shadow:0 4px 24px rgba(0,0,0,0.10)',
+      padding: [8, 12],
+      extraCssText: 'border-radius:8px;box-shadow:0 4px 24px rgba(0,0,0,0.10)',
     },
     visualMap: {
       type: 'piecewise',
@@ -162,7 +311,7 @@ function renderWorld() {
       itemGap: 6,
     },
     series: [{
-      type: 'map', map: 'world',
+      type: 'map', map: isEn ? 'world-en' : 'world-cn',
       roam: true, selectedMode: false,
       aspectScale: 0.85, zoom: 1.1, center: [15, 15],
       label: { show: false },
@@ -171,35 +320,42 @@ function renderWorld() {
         itemStyle: { areaColor: '#ef4444', borderColor: '#fff', borderWidth: 1.5, shadowBlur: 14, shadowColor: 'rgba(239,68,68,0.25)' },
       },
       itemStyle: { areaColor: '#eff6ff', borderColor: '#dce1e8', borderWidth: 0.6 },
-      data: [
-        { name: 'China', value: d.chinaTotal },
-        ...Object.entries(d.countries).map(([name, value]) => ({ name, value })),
-      ],
+      data: worldData,
     }],
-  })
+  }, true)
 }
 
 function renderChina() {
-  const d = DIST_DATA
+  const isEn = isEnglish.value
   const el = document.getElementById('chinaMap')
   if (!el) return
-  const chart = echarts.init(el)
-  cc.value = chart
-  const chinaData = Object.entries(d.provinces)
-    .filter(([k]) => PROV_MAP[k])
-    .map(([k, v]) => ({ name: PROV_MAP[k], value: v }))
-  chart.setOption({
+  if (!cc.value) {
+    cc.value = echarts.init(el)
+    cc.value.on('click', (params: any) => {
+      const regionName = params.name
+      if (selectedChinaRegion.value === regionName) {
+        selectedChinaRegion.value = null
+        chinaDetailSchools.value = []
+      } else {
+        selectedChinaRegion.value = regionName
+        const cnName = Object.entries(PROV_NAME_EN).find(([,en]) => en === regionName)?.[0] || regionName
+        chinaDetailSchools.value = getSchoolList(cnName, false)
+      }
+    })
+  }
+  const chinaData = teamData
+    ? Object.entries(teamData.china).filter(([,v]: any) => v.count > 0).map(([k, v]: any) => ({ name: isEn ? (PROV_NAME_EN[k] || k) : k, value: v.count }))
+    : Object.entries(PROV_COUNTS).map(([k, v]) => ({ name: isEn ? (PROV_NAME_EN[k] || k) : k, value: v }))
+  cc.value.setOption({
     tooltip: {
       trigger: 'item',
       formatter: (p: any) => {
-        const v = p.value || 0
-        return `<div style="font-size:14px;font-weight:600;color:#1a202c;margin-bottom:2px">${p.name}</div>
-                <div style="font-size:13px;color:#4a5568">${v} ${isEnglish.value ? 'teams' : '组'}</div>`
+        return tooltipHtml(p.name, p.value || 0, isEn)
       },
       backgroundColor: 'rgba(255,255,255,0.96)',
       borderColor: 'rgba(0,0,0,0.06)', borderWidth: 1,
-      padding: [10, 14],
-      extraCssText: 'border-radius:10px;box-shadow:0 4px 24px rgba(0,0,0,0.10)',
+      padding: [8, 12],
+      extraCssText: 'border-radius:8px;box-shadow:0 4px 24px rgba(0,0,0,0.10)',
     },
     visualMap: {
       min: 0,
@@ -214,10 +370,9 @@ function renderChina() {
       indicatorStyle: { borderColor: '#3b82f6' },
     },
     series: [{
-      type: 'map', map: 'china',
+      type: 'map', map: isEn ? 'china-en' : 'china-cn',
       roam: true, selectedMode: false,
-      label: { show: true, fontSize: 11, color: '#2d3748', fontWeight: 500 },
-      nameMap: isEnglish.value ? PROV_NAME_EN : undefined,
+      label: { show: false },
       emphasis: {
         label: { show: true, fontSize: 14, fontWeight: 'bold', color: '#1a202c' },
         itemStyle: { areaColor: '#ef4444', borderColor: '#fff', borderWidth: 1.5, shadowBlur: 14, shadowColor: 'rgba(239,68,68,0.25)' },
@@ -225,17 +380,53 @@ function renderChina() {
       itemStyle: { areaColor: '#eff6ff', borderColor: '#e2e8f0', borderWidth: 0.8 },
       data: chinaData,
     }],
-  })
+  }, true)
 }
 
 async function initMaps() {
   try {
+    // Load team data
+    try {
+      const td = await fetch(`${baseUrl}team-data.json`)
+      if (td.ok) teamData = await td.json()
+    } catch {}
+    
     const [wj, cj] = await Promise.all([
       fetchJson(CDN_URLS.world, isEnglish.value ? 'world map' : '世界地图'),
       fetchJson(CDN_URLS.china, isEnglish.value ? 'China map' : '中国地图'),
     ])
-    echarts.registerMap('world', wj)
-    echarts.registerMap('china', cj)
+    
+    // Copy 南海诸岛 feature from china map to world maps
+    const nanhaiFeature = cj.features?.find((f: any) => f.properties?.name === '南海诸岛')
+    if (nanhaiFeature) {
+      // Add English-named version for world-en
+      const enNanhai = JSON.parse(JSON.stringify(nanhaiFeature))
+      enNanhai.properties.name = 'South China Sea Islands'
+      wj.features.push(enNanhai)
+    }
+    
+    echarts.registerMap('world-en', wj)
+    const worldCn = JSON.parse(JSON.stringify(wj))
+    worldCn.features.forEach((f: any) => {
+      if (f.properties?.name && COUNTRY_CN_MAP[f.properties.name]) {
+        f.properties.name = COUNTRY_CN_MAP[f.properties.name]
+      }
+    })
+    echarts.registerMap('world-cn', worldCn)
+    echarts.registerMap('china-cn', JSON.parse(JSON.stringify(cj, (key, val) => {
+      if (key === 'features') return val.filter((f: any) => f.properties?.name !== '十段线')
+      return val
+    })))
+    const enMap = JSON.parse(JSON.stringify(cj, (key, val) => {
+      if (key === 'features') return val.filter((f: any) => f.properties?.name !== '十段线')
+      return val
+    }))
+    enMap.features.forEach((f: any) => {
+      if (f.properties?.name && PROV_NAME_EN[f.properties.name]) {
+        f.properties.name = PROV_NAME_EN[f.properties.name]
+      }
+    })
+    echarts.registerMap('china-en', enMap)
     renderWorld()
     renderChina()
     loading.value = false
@@ -246,6 +437,11 @@ async function initMaps() {
     loading.value = false
   }
 }
+
+watch(isEnglish, () => {
+  if (cc.value) renderChina()
+  if (wc.value) renderWorld()
+})
 </script>
 
 <template>
@@ -383,17 +579,17 @@ async function initMaps() {
           </h2>
           <div class="mt-2 flex flex-wrap items-center justify-center gap-3 text-sm text-gray-500">
             <span class="inline-flex items-center gap-1">
-              <strong class="text-brand-blue text-lg">{{ DIST_DATA.total }}</strong>
+              <strong class="text-brand-blue text-lg">{{ teamData ? teamData.total : 81 }}</strong>
               {{ isEnglish ? 'teams' : '参赛团队' }}
             </span>
             <span class="w-px h-5 bg-gray-300"></span>
             <span class="inline-flex items-center gap-1">
-              <strong class="text-brand-blue text-lg">{{ countryCount }}</strong>
+              <strong class="text-brand-blue text-lg">{{ teamData ? Object.keys(teamData.world).length : 3 }}</strong>
               {{ isEnglish ? 'countries' : '国家' }}
             </span>
             <span class="w-px h-5 bg-gray-300"></span>
             <span class="inline-flex items-center gap-1">
-              <strong class="text-brand-blue text-lg">{{ provinceCount }}</strong>
+              <strong class="text-brand-blue text-lg">{{ teamData ? Object.keys(teamData.china).length : 21 }}</strong>
               {{ isEnglish ? 'Chinese provinces' : '中国省份' }}
             </span>
           </div>
@@ -414,6 +610,25 @@ async function initMaps() {
           <div id="worldMap" class="w-full h-[420px]"></div>
         </div>
 
+        <!-- World Detail Panel -->
+        <div v-if="selectedWorldRegion && worldDetailSchools.length > 0"
+             class="bg-white rounded-xl shadow-sm border border-brand-blue/20 overflow-hidden mb-6">
+          <div class="flex items-center justify-between px-6 py-3 bg-brand-blue/5">
+            <span class="text-sm font-semibold text-brand-blue">
+              {{ isEnglish ? 'Schools / Organizations in' : '学校/单位 ·' }} {{ selectedWorldRegion }}
+            </span>
+            <button @click="selectedWorldRegion = null; worldDetailSchools = []"
+                    class="text-gray-400 hover:text-gray-600 text-lg leading-none">&times;</button>
+          </div>
+          <div class="px-6 py-4 max-h-[300px] overflow-y-auto">
+            <div v-for="s in worldDetailSchools" :key="s.name"
+                 class="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+              <span class="text-sm text-gray-800">{{ getSchoolDisplay(s.name, isEnglish) }}</span>
+              <span class="text-xs text-gray-400 ml-2 whitespace-nowrap" v-if="s.count > 1">x{{ s.count }}</span>
+            </div>
+          </div>
+        </div>
+
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
           <div class="flex items-center gap-2 px-6 pt-4 pb-1">
             <span class="w-2 h-2 rounded-full bg-red-800 flex-shrink-0"></span>
@@ -422,6 +637,25 @@ async function initMaps() {
             </span>
           </div>
           <div id="chinaMap" class="w-full h-[420px]"></div>
+        </div>
+
+        <!-- China Detail Panel -->
+        <div v-if="selectedChinaRegion && chinaDetailSchools.length > 0"
+             class="bg-white rounded-xl shadow-sm border border-brand-blue/20 overflow-hidden mb-6">
+          <div class="flex items-center justify-between px-6 py-3 bg-brand-blue/5">
+            <span class="text-sm font-semibold text-brand-blue">
+              {{ isEnglish ? 'Schools / Organizations in' : '学校/单位 ·' }} {{ selectedChinaRegion }}
+            </span>
+            <button @click="selectedChinaRegion = null; chinaDetailSchools = []"
+                    class="text-gray-400 hover:text-gray-600 text-lg leading-none">&times;</button>
+          </div>
+          <div class="px-6 py-4 max-h-[300px] overflow-y-auto">
+            <div v-for="s in chinaDetailSchools" :key="s.name"
+                 class="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+              <span class="text-sm text-gray-800">{{ getSchoolDisplay(s.name, isEnglish) }}</span>
+              <span class="text-xs text-gray-400 ml-2 whitespace-nowrap" v-if="s.count > 1">x{{ s.count }}</span>
+            </div>
+          </div>
         </div>
 
         <div v-if="loading" class="mt-6 text-center">

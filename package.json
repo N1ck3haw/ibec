@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "axios": "^1.6.7",
+    "convert-csv-to-json": "^4.63.0",
+    "csv-parse": "^7.0.1",
     "echarts": "^6.1.0",
+    "iconv-lite": "^0.7.3",
     "vue": "^3.4.15",
     "vue-router": "^4.2.5"
   },
