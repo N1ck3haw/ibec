@@ -279,6 +279,22 @@ function renderWorld() {
         worldDetailSchools.value = getSchoolList(key === '中国' ? 'China' : key, true)
       }
     })
+    // Link China and South China Sea Islands highlight on hover
+    const nhName = isEn ? 'South China Sea Islands' : '南海诸岛'
+    const chinaName = isEn ? 'China' : '中国'
+    wc.value.on('mouseover', (params: any) => {
+      if (params.name === chinaName) {
+        wc.value?.dispatchAction({ type: 'highlight', seriesIndex: 0, name: nhName })
+      } else if (params.name === nhName) {
+        wc.value?.dispatchAction({ type: 'highlight', seriesIndex: 0, name: chinaName })
+      }
+    })
+    wc.value.on('mouseout', (params: any) => {
+      if (params.name === chinaName || params.name === nhName) {
+        wc.value?.dispatchAction({ type: 'downplay', seriesIndex: 0, name: chinaName })
+        wc.value?.dispatchAction({ type: 'downplay', seriesIndex: 0, name: nhName })
+      }
+    })
   }
   const worldData = Object.entries(teamData?.world || {China:{count:76,schools:[]}}).map(([name, info]: any) => ({
     name: isEn ? name : (COUNTRY_CN_MAP[name] || name),
