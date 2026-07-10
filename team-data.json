@@ -1,0 +1,525 @@
+{
+  "world": {
+    "China": {
+      "count": 72,
+      "schools": [
+        {
+          "name": "浙江大学",
+          "count": 11
+        },
+        {
+          "name": "南方医科大学",
+          "count": 5
+        },
+        {
+          "name": "广东食品药品职业学院",
+          "count": 4
+        },
+        {
+          "name": "华中农业大学",
+          "count": 4
+        },
+        {
+          "name": "海南大学",
+          "count": 3
+        },
+        {
+          "name": "晋中信息学院",
+          "count": 3
+        },
+        {
+          "name": "西湖大学",
+          "count": 2
+        },
+        {
+          "name": "湖北大学",
+          "count": 2
+        },
+        {
+          "name": "福建医科大学",
+          "count": 2
+        },
+        {
+          "name": "空军军医大学",
+          "count": 2
+        },
+        {
+          "name": "齐鲁工业大学",
+          "count": 2
+        },
+        {
+          "name": "四川大学",
+          "count": 2
+        },
+        {
+          "name": "华东师范大学",
+          "count": 1
+        },
+        {
+          "name": "华南农业大学",
+          "count": 1
+        },
+        {
+          "name": "湘潭大学",
+          "count": 1
+        },
+        {
+          "name": "厦门大学",
+          "count": 1
+        },
+        {
+          "name": "上海科技大学",
+          "count": 1
+        },
+        {
+          "name": "Zhujiang Hospital, Southern Medical University",
+          "count": 1
+        },
+        {
+          "name": "西北农林科技大学",
+          "count": 1
+        },
+        {
+          "name": "西藏大学",
+          "count": 1
+        },
+        {
+          "name": "哈尔滨工业大学",
+          "count": 1
+        },
+        {
+          "name": "北京协和医学院",
+          "count": 1
+        },
+        {
+          "name": "深圳理工大学",
+          "count": 1
+        },
+        {
+          "name": "山西农业大学",
+          "count": 1
+        },
+        {
+          "name": "昌平实验室",
+          "count": 1
+        },
+        {
+          "name": "安徽医科大学第一附属医院",
+          "count": 1
+        },
+        {
+          "name": "中南财经政法大学",
+          "count": 1
+        },
+        {
+          "name": "华中科技大学",
+          "count": 1
+        },
+        {
+          "name": "深圳北理莫斯科大学",
+          "count": 1
+        },
+        {
+          "name": "长春理工大学",
+          "count": 1
+        },
+        {
+          "name": "山东大学",
+          "count": 1
+        },
+        {
+          "name": "中国药科大学",
+          "count": 1
+        },
+        {
+          "name": "南昌大学",
+          "count": 1
+        },
+        {
+          "name": "Zhejiang University",
+          "count": 1
+        },
+        {
+          "name": "南京农业大学",
+          "count": 1
+        },
+        {
+          "name": "长春中医药大学",
+          "count": 1
+        },
+        {
+          "name": "浙江海洋大学",
+          "count": 1
+        },
+        {
+          "name": "陕西科技大学",
+          "count": 1
+        },
+        {
+          "name": "西北工业大学",
+          "count": 1
+        },
+        {
+          "name": "中国中医科学院",
+          "count": 1
+        },
+        {
+          "name": "中南大学",
+          "count": 1
+        },
+        {
+          "name": "中山大学孙逸仙纪念医院",
+          "count": 1
+        }
+      ]
+    },
+    "South Korea": {
+      "count": 1,
+      "schools": [
+        {
+          "name": "Xi'an Jiaotong University",
+          "count": 1
+        }
+      ]
+    },
+    "United States": {
+      "count": 3,
+      "schools": [
+        {
+          "name": "University of California, Davis",
+          "count": 1
+        },
+        {
+          "name": "University of California, San Diego",
+          "count": 1
+        },
+        {
+          "name": "Purdue University",
+          "count": 1
+        }
+      ]
+    },
+    "Unknown": {
+      "count": 1,
+      "schools": [
+        {
+          "name": "信阳师范大学",
+          "count": 1
+        }
+      ]
+    },
+    "Thailand": {
+      "count": 3,
+      "schools": [
+        {
+          "name": "Faculty of Pharmaceutical Sciences, Chulalongkorn University",
+          "count": 3
+        }
+      ]
+    },
+    "Japan": {
+      "count": 1,
+      "schools": [
+        {
+          "name": "东京科学大学",
+          "count": 1
+        }
+      ]
+    }
+  },
+  "china": {
+    "广东": {
+      "count": 12,
+      "schools": [
+        {
+          "name": "广东食品药品职业学院",
+          "count": 4
+        },
+        {
+          "name": "南方医科大学",
+          "count": 4
+        },
+        {
+          "name": "华南农业大学",
+          "count": 1
+        },
+        {
+          "name": "深圳理工大学",
+          "count": 1
+        },
+        {
+          "name": "深圳北理莫斯科大学",
+          "count": 1
+        },
+        {
+          "name": "中山大学孙逸仙纪念医院",
+          "count": 1
+        }
+      ]
+    },
+    "浙江": {
+      "count": 13,
+      "schools": [
+        {
+          "name": "浙江大学",
+          "count": 10
+        },
+        {
+          "name": "University of California, San Diego",
+          "count": 1
+        },
+        {
+          "name": "西湖大学",
+          "count": 1
+        },
+        {
+          "name": "浙江海洋大学",
+          "count": 1
+        }
+      ]
+    },
+    "湖北": {
+      "count": 7,
+      "schools": [
+        {
+          "name": "华中农业大学",
+          "count": 3
+        },
+        {
+          "name": "湖北大学",
+          "count": 2
+        },
+        {
+          "name": "中南财经政法大学",
+          "count": 1
+        },
+        {
+          "name": "华中科技大学",
+          "count": 1
+        }
+      ]
+    },
+    "北京": {
+      "count": 5,
+      "schools": [
+        {
+          "name": "南方医科大学",
+          "count": 1
+        },
+        {
+          "name": "西湖大学",
+          "count": 1
+        },
+        {
+          "name": "北京协和医学院",
+          "count": 1
+        },
+        {
+          "name": "昌平实验室",
+          "count": 1
+        },
+        {
+          "name": "中国中医科学院",
+          "count": 1
+        }
+      ]
+    },
+    "上海": {
+      "count": 3,
+      "schools": [
+        {
+          "name": "华东师范大学",
+          "count": 1
+        },
+        {
+          "name": "上海科技大学",
+          "count": 1
+        },
+        {
+          "name": "南京农业大学",
+          "count": 1
+        }
+      ]
+    },
+    "湖南": {
+      "count": 2,
+      "schools": [
+        {
+          "name": "湘潭大学",
+          "count": 1
+        },
+        {
+          "name": "中南大学",
+          "count": 1
+        }
+      ]
+    },
+    "福建": {
+      "count": 4,
+      "schools": [
+        {
+          "name": "福建医科大学",
+          "count": 2
+        },
+        {
+          "name": "厦门大学",
+          "count": 1
+        },
+        {
+          "name": "Purdue University",
+          "count": 1
+        }
+      ]
+    },
+    "海南": {
+      "count": 3,
+      "schools": [
+        {
+          "name": "海南大学",
+          "count": 3
+        }
+      ]
+    },
+    "陕西": {
+      "count": 5,
+      "schools": [
+        {
+          "name": "空军军医大学",
+          "count": 2
+        },
+        {
+          "name": "西北农林科技大学",
+          "count": 1
+        },
+        {
+          "name": "陕西科技大学",
+          "count": 1
+        },
+        {
+          "name": "西北工业大学",
+          "count": 1
+        }
+      ]
+    },
+    "西藏": {
+      "count": 1,
+      "schools": [
+        {
+          "name": "西藏大学",
+          "count": 1
+        }
+      ]
+    },
+    "黑龙江": {
+      "count": 1,
+      "schools": [
+        {
+          "name": "哈尔滨工业大学",
+          "count": 1
+        }
+      ]
+    },
+    "江苏": {
+      "count": 2,
+      "schools": [
+        {
+          "name": "浙江大学",
+          "count": 1
+        },
+        {
+          "name": "中国药科大学",
+          "count": 1
+        }
+      ]
+    },
+    "山东": {
+      "count": 3,
+      "schools": [
+        {
+          "name": "齐鲁工业大学",
+          "count": 2
+        },
+        {
+          "name": "山东大学",
+          "count": 1
+        }
+      ]
+    },
+    "河南": {
+      "count": 1,
+      "schools": [
+        {
+          "name": "信阳师范大学",
+          "count": 1
+        }
+      ]
+    },
+    "山西": {
+      "count": 4,
+      "schools": [
+        {
+          "name": "晋中信息学院",
+          "count": 3
+        },
+        {
+          "name": "山西农业大学",
+          "count": 1
+        }
+      ]
+    },
+    "四川": {
+      "count": 2,
+      "schools": [
+        {
+          "name": "四川大学",
+          "count": 2
+        }
+      ]
+    },
+    "安徽": {
+      "count": 1,
+      "schools": [
+        {
+          "name": "安徽医科大学第一附属医院",
+          "count": 1
+        }
+      ]
+    },
+    "河北": {
+      "count": 1,
+      "schools": [
+        {
+          "name": "华中农业大学",
+          "count": 1
+        }
+      ]
+    },
+    "吉林": {
+      "count": 2,
+      "schools": [
+        {
+          "name": "长春理工大学",
+          "count": 1
+        },
+        {
+          "name": "长春中医药大学",
+          "count": 1
+        }
+      ]
+    },
+    "江西": {
+      "count": 1,
+      "schools": [
+        {
+          "name": "南昌大学",
+          "count": 1
+        }
+      ]
+    },
+    "南海诸岛": {
+      "count": 0,
+      "schools": []
+    }
+  },
+  "total": 81
+}
