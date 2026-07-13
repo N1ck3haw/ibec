@@ -500,6 +500,14 @@ watch(isEnglish, () => {
           </div>
         </div>
       </div>
+      <!-- Sponsor Notice -->
+      <div class="absolute bottom-6 right-6 z-20">
+        <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-5 py-3 shadow-lg">
+          <p class="text-sm font-medium text-white/90 tracking-wide">
+            {{ isEnglish ? '🏆 Sponsors: To Be Announced' : '🏆 赞助商：待公布' }}
+          </p>
+        </div>
+      </div>
     </div>
 
     <!-- Timeline -->
