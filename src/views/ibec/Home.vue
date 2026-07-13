@@ -501,9 +501,14 @@ watch(isEnglish, () => {
         </div>
       </div>
       <!-- Sponsor Notice -->
-      <div class="absolute bottom-6 right-6 z-20">
-        <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-6 py-4 shadow-lg">
-          <p class="text-base font-medium text-white/90 tracking-wide">
+      <div class="absolute bottom-8 right-8 z-20">
+        <div class="relative bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-md border-2 border-white/30 rounded-2xl px-7 py-5 shadow-2xl shadow-black/20 overflow-hidden">
+          <!-- Highlight line top -->
+          <div class="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
+          <!-- Shine effect -->
+          <div class="absolute -top-10 -right-10 w-24 h-24 bg-white/5 rounded-full blur-xl"></div>
+          <div class="absolute -bottom-6 -left-6 w-16 h-16 bg-white/5 rounded-full blur-xl"></div>
+          <p class="relative text-xl font-bold text-white drop-shadow-sm tracking-wide">
             {{ isEnglish ? '🏆 Sponsors: To Be Announced' : '🏆 赞助商：待公布' }}
           </p>
         </div>
@@ -526,7 +531,7 @@ watch(isEnglish, () => {
           <dl class="space-y-10 md:space-y-0 md:grid md:grid-cols-4 md:gap-x-8 md:gap-y-10">
             <div class="relative">
               <dt>
-                <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-brand-blue text-white">
+                <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-brand-blue text-white card-hover">
                   1
                 </div>
                 <p class="ml-16 text-lg leading-6 font-medium text-gray-900">
@@ -606,12 +611,12 @@ watch(isEnglish, () => {
           </div>
           <p class="mt-3 text-xs text-gray-400 italic">
             {{ isEnglish
-              ? 'Note: Distribution is based on the leader_address submitted during registration.'
-              : '注：本分布以参赛者注册时提交的通讯地址为准。' }}
+              ? 'Note: Distribution is based on the institution/unit submitted by team leaders during registration.'
+              : '注：本分布以参赛队伍队长提交的学校/事业单位信息为准。' }}
           </p>
         </div>
 
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6 card-hover">
           <div class="flex items-center gap-2 px-6 pt-4 pb-1">
             <span class="w-2 h-2 rounded-full bg-red-600 flex-shrink-0"></span>
             <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">
@@ -623,7 +628,7 @@ watch(isEnglish, () => {
 
         <!-- World Detail Panel -->
         <div v-if="selectedWorldRegion"
-             class="bg-white rounded-xl shadow-sm border border-brand-blue/20 overflow-hidden mb-6">
+             class="bg-white rounded-xl shadow-sm border border-brand-blue/20 overflow-hidden mb-6 card-hover">
           <div class="flex items-center justify-between px-6 py-3 bg-brand-blue/5">
             <span class="text-sm font-semibold text-brand-blue">
               {{ isEnglish ? 'Schools / Organizations in' : '学校/单位 ·' }} {{ selectedWorldRegion }}
@@ -643,7 +648,7 @@ watch(isEnglish, () => {
           </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden card-hover">
           <div class="flex items-center gap-2 px-6 pt-4 pb-1">
             <span class="w-2 h-2 rounded-full bg-red-800 flex-shrink-0"></span>
             <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">
@@ -655,7 +660,7 @@ watch(isEnglish, () => {
 
         <!-- China Detail Panel -->
         <div v-if="selectedChinaRegion"
-             class="bg-white rounded-xl shadow-sm border border-brand-blue/20 overflow-hidden mb-6">
+             class="bg-white rounded-xl shadow-sm border border-brand-blue/20 overflow-hidden mb-6 card-hover">
           <div class="flex items-center justify-between px-6 py-3 bg-brand-blue/5">
             <span class="text-sm font-semibold text-brand-blue">
               {{ isEnglish ? 'Schools / Organizations in' : '学校/单位 ·' }} {{ selectedChinaRegion }}
@@ -702,7 +707,7 @@ watch(isEnglish, () => {
             {{ isEnglish ? 'Click play to learn about iBEC.' : '点击播放，快速了解 iBEC 竞赛。' }}
           </p>
         </div>
-        <div class="rounded-xl overflow-hidden shadow-lg border border-gray-200 bg-black">
+        <div class="rounded-xl overflow-hidden shadow-lg border border-gray-200 bg-black card-hover">
           <video
             class="w-full h-auto max-h-[70vh]"
             controls
@@ -728,7 +733,7 @@ watch(isEnglish, () => {
           <div 
             v-for="track in tracks" 
             :key="track.id" 
-            class="relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3"
+            class="relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 card-hover"
           >
             <div class="flex-shrink-0 text-4xl">
               {{ track.icon }}

@@ -66,7 +66,7 @@ const tracks = [
           {{ isEnglish ? 'Competition Tracks' : '竞赛赛道' }}
         </h2>
         <div class="mt-6 space-y-8">
-          <div v-for="(track, index) in tracks" :key="track.id" :id="track.id" class="relative bg-gray-50 p-6 rounded-lg border border-gray-200">
+          <div v-for="(track, index) in tracks" :key="track.id" :id="track.id" class="relative bg-gray-50 p-6 rounded-lg border border-gray-200 card-hover">
             <h3 class="text-xl font-bold text-brand-blue mb-2">
               {{ index + 1 }}. {{ isEnglish ? track.title.en : track.title.zh }}
             </h3>
@@ -252,7 +252,7 @@ const tracks = [
                     </span>
                 </h3>
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center group">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm card-hover flex flex-col items-center text-center group">
                         <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4 text-2xl group-hover:bg-blue-600 group-hover:text-white transition-colors">
                             🧬
                         </div>
@@ -260,7 +260,7 @@ const tracks = [
                         <p class="text-xs text-gray-500">{{ isEnglish ? 'Track 1' : '赛道一' }}</p>
                     </div>
                     
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center group">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm card-hover flex flex-col items-center text-center group">
                          <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-4 text-2xl group-hover:bg-purple-600 group-hover:text-white transition-colors">
                             🧮
                         </div>
@@ -268,7 +268,7 @@ const tracks = [
                         <p class="text-xs text-gray-500">{{ isEnglish ? 'Track 2' : '赛道二' }}</p>
                     </div>
 
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center group">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm card-hover flex flex-col items-center text-center group">
                          <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-4 text-2xl group-hover:bg-green-600 group-hover:text-white transition-colors">
                             💻
                         </div>
@@ -276,7 +276,7 @@ const tracks = [
                         <p class="text-xs text-gray-500">{{ isEnglish ? 'Track 3' : '赛道三' }}</p>
                     </div>
 
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center group">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm card-hover flex flex-col items-center text-center group">
                          <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mb-4 text-2xl group-hover:bg-orange-600 group-hover:text-white transition-colors">
                             ⚙️
                         </div>
@@ -292,7 +292,7 @@ const tracks = [
                     {{ isEnglish ? 'Individual Category Awards' : '单项等级奖' }}
                 </h3>
                 <div class="grid md:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm card-hover">
                         <div class="flex items-center mb-4">
                             <div class="w-12 h-12 bg-pink-100 text-pink-600 rounded-full flex-shrink-0 flex items-center justify-center text-2xl mr-4">
                                 🎨
@@ -307,7 +307,7 @@ const tracks = [
                         </p>
                     </div>
 
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm card-hover">
                         <div class="flex items-center mb-4">
                             <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex-shrink-0 flex items-center justify-center text-2xl mr-4">
                                 ⚙️
@@ -322,7 +322,7 @@ const tracks = [
                         </p>
                     </div>
 
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm card-hover">
                         <div class="flex items-center mb-4">
                             <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex-shrink-0 flex items-center justify-center text-2xl mr-4">
                                 🎤
@@ -337,7 +337,7 @@ const tracks = [
                         </p>
                     </div>
 
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm card-hover">
                         <div class="flex items-center mb-4">
                             <div class="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-full flex-shrink-0 flex items-center justify-center text-2xl mr-4">
                                 🏅
@@ -375,7 +375,7 @@ const tracks = [
                     </div>
 
                     <!-- Gold -->
-                    <div class="bg-white p-6 rounded-xl border-t-4 border-yellow-400 shadow-sm">
+                    <div class="bg-white p-6 rounded-xl border-t-4 border-yellow-400 shadow-sm card-hover">
                         <div class="flex items-center justify-between mb-4">
                              <h4 class="text-xl font-bold text-gray-900">{{ isEnglish ? 'Gold Medal' : '金奖' }}</h4>
                              <span class="text-2xl">🥇</span>
@@ -386,7 +386,7 @@ const tracks = [
                     </div>
 
                     <!-- Silver -->
-                    <div class="bg-white p-6 rounded-xl border-t-4 border-gray-400 shadow-sm">
+                    <div class="bg-white p-6 rounded-xl border-t-4 border-gray-400 shadow-sm card-hover">
                          <div class="flex items-center justify-between mb-4">
                              <h4 class="text-xl font-bold text-gray-900">{{ isEnglish ? 'Silver Medal' : '银奖' }}</h4>
                              <span class="text-2xl">🥈</span>
@@ -397,7 +397,7 @@ const tracks = [
                     </div>
 
                     <!-- Bronze -->
-                    <div class="bg-white p-6 rounded-xl border-t-4 border-orange-400 shadow-sm">
+                    <div class="bg-white p-6 rounded-xl border-t-4 border-orange-400 shadow-sm card-hover">
                          <div class="flex items-center justify-between mb-4">
                              <h4 class="text-xl font-bold text-gray-900">{{ isEnglish ? 'Bronze / Excellence' : '铜奖 / 优胜奖' }}</h4>
                              <span class="text-2xl">🥉</span>
@@ -477,7 +477,7 @@ const tracks = [
         <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl mb-6">
           {{ isEnglish ? 'Contact' : '联系方式' }}
         </h2>
-        <div class="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+        <div class="bg-white rounded-lg p-6 border border-gray-200 shadow-sm card-hover">
             <p class="text-lg text-gray-600">
                 {{ isEnglish ? 'For inquiries related to submissions, please contact the Organizing Committee at:' : '如有相关疑问，请联系组委会：' }}
                 <a href="mailto:ibec@zju.edu.cn" class="text-brand-blue font-bold hover:underline">ibec@zju.edu.cn</a>
